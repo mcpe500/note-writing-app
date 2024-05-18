@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/pages/home.dart';
 
 class LoginApp extends StatelessWidget {
   const LoginApp({super.key});
@@ -41,8 +42,8 @@ class LoginPageState extends State<LoginPage> {
           ElevatedButton(
             child: const Text('Login'),
             onPressed: () {
-              // Handle login logic here
-              Navigator.pushReplacementNamed(context, 'home');
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => HomeApp(username: usernameController.text)));
             },
           ),
         ],

@@ -1,33 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/pages/login.dart';
 
 class HomeApp extends StatelessWidget {
-  const HomeApp({super.key});
+  final String username; // Declare username as final
+
+  const HomeApp({super.key, required this.username});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Home')),
-        body: const HomePage(),
+        body: HomePage(username: username),
       ),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String username;
+
+  const HomePage({super.key, required this.username});
+
   @override
   HomePageState createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
   final TextEditingController searchController = TextEditingController();
-  String username = 'Current User'; // Replace this with the actual username
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home - $username'), // Display the username in the header
+        title: Text('Home - ${widget.username}'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const LoginApp()));
+            },
+          ),],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
