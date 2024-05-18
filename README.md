@@ -5,11 +5,23 @@ This is a Flutter prototype for a mobile writing app, allowing users to create a
 **Screenshots**
 
 * **Homepage:**
+
+
   ![Screenshot of Homepage](./screenshots/homepage_with_temporary_data.png)
+
+
 * **Login Screen with Input:**
+
+
   ![Login Screen with Input](./screenshots/login_with_input.png)
+
+
 * **Login Page:**
+
+
   ![Login Page](./screenshots/login_page.png)
+
+  
 
 **Features:**
 
