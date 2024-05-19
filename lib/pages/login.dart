@@ -100,6 +100,10 @@ class LoginPageState extends State<LoginPage> {
                 accountsPassword.add(passwordController.text);
                 await saveArray("accountsUsername", accountsUsername);
                 await saveArray("accountsPassword", accountsPassword);
+
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        HomeApp(username: usernameController.text)));
               }
             },
           ),
