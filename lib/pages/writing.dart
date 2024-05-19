@@ -7,11 +7,21 @@ class WritingApp extends StatelessWidget {
   final String username;
   const WritingApp(
       {super.key, required this.writingIndex, required this.username});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.grey,
+        hintColor: Colors.amber,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       home: Scaffold(
-        appBar: AppBar(title: const Text('Writing')),
+        appBar: AppBar(
+          title: const Text('Writing Note'),
+          backgroundColor: Colors.yellow,
+        ),
         body: WritingPage(
           writingIndex: writingIndex,
           username: username,
@@ -26,6 +36,7 @@ class WritingPage extends StatefulWidget {
   final String username;
   const WritingPage(
       {super.key, required this.writingIndex, required this.username});
+
   @override
   WritingPageState createState() => WritingPageState();
 }
@@ -78,10 +89,18 @@ class WritingPageState extends State<WritingPage> {
                       child: const Text('Cancel'),
                       onPressed: () {
                         Navigator.pop(context);
+                      },
+                    ),
+                    TextButton(
+                      child: const Text('No'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  HomeApp(username: widget.username)),
+                            builder: (context) =>
+                                HomeApp(username: widget.username),
+                          ),
                         );
                       },
                     ),
@@ -90,10 +109,12 @@ class WritingPageState extends State<WritingPage> {
                       onPressed: () async {
                         saveWriting();
                         Navigator.pop(context);
+                        Navigator.pop(context);
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  HomeApp(username: widget.username)),
+                            builder: (context) =>
+                                HomeApp(username: widget.username),
+                          ),
                         );
                       },
                     ),
@@ -124,12 +145,36 @@ class WritingPageState extends State<WritingPage> {
           children: <Widget>[
             TextField(
               controller: titleController,
-              decoration: const InputDecoration(labelText: 'Title'),
+              style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87),
+              decoration: InputDecoration(
+                labelText: 'Title',
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide.none,
+                ),
+              ),
             ),
-            TextField(
-              controller: textController,
-              decoration: const InputDecoration(labelText: 'Text'),
-              maxLines: null,
+            const SizedBox(height: 10),
+            Expanded(
+              child: TextField(
+                controller: textController,
+                style: const TextStyle(fontSize: 18, color: Colors.black87),
+                decoration: InputDecoration(
+                  labelText: 'Text',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                maxLines: null,
+              ),
             ),
           ],
         ),
