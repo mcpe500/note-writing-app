@@ -6,20 +6,47 @@ This is a Flutter prototype for a mobile writing app, allowing users to create a
 
 * **Homepage:**
 
+   - Empty Homepage :
 
-  ![Screenshot of Homepage](./screenshots/homepage_with_temporary_data.png)
+      - ![Empty Homepage](./screenshots/empty_home_page.jpg)
 
+   - Homepage With Data :
 
-* **Login Screen with Input:**
+      - ![Screenshot of Homepage](./screenshots/homepage_with_temporary_data.jpg)
 
+   - Homepage With Overflowing Data :
 
-  ![Login Screen with Input](./screenshots/login_with_input.png)
+      - ![Screenshot of Homepage Overflowing Data](./screenshots/homepage_with_over_flowing_temporary_data.jpg)
+
+   - Homepage With Filtered Data :
+
+      - ![Screenshot of Homepage Filtered Data](./screenshots/homepage_with_filtered_data.jpg)
 
 
 * **Login Page:**
 
+   - Base Login Page :
 
-  ![Login Page](./screenshots/login_page.png)
+      - ![Login Page](./screenshots/empty_login_screen.jpg)
+
+   - Login Page With Input :
+
+      - ![Login Page With Input](./screenshots/login_page_with_input.jpg)
+
+   - Login Page With Wrong Input :
+
+      - ![Login Page With Wrong Input](./screenshots/login_page_with_wrong_input.jpg)
+  
+
+* **Writing Page:**
+
+   - Writing Page :
+
+      - ![Writing Page](./screenshots/writing_page.jpg)
+
+   - Writing Page Back Button Pressed :
+
+      - ![Writing Page](./screenshots/writing_page_back_button_pressed.jpg)
 
   
 
@@ -87,4 +114,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 **Developed using:**
 
-- idx.dev (optional, if applicable)
+- [idx.dev](https://idx.dev/) (optional, if applicable)
