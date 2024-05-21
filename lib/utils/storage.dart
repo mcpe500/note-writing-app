@@ -10,9 +10,12 @@ Future<void> saveArray(String arrayName, List<String> array) async {
 Future<List<String>> loadArray(String arrayName) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String? jsonString = prefs.getString(arrayName);
+
   if (jsonString == null) {
     return [];
   }
-  List<String> array = List<String>.from(jsonDecode(jsonString));
+
+  List<dynamic> decodedJson = jsonDecode(jsonString);
+  List<String> array = List<String>.from(decodedJson);
   return array;
 }

@@ -143,19 +143,21 @@ class WritingPageState extends State<WritingPage> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
-            TextField(
-              controller: titleController,
-              style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
-              decoration: InputDecoration(
-                labelText: 'Title',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none,
+            Expanded(
+              child: TextField(
+                controller: titleController,
+                style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87),
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
               ),
             ),
