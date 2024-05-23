@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/pages/home.dart';
+import 'package:myapp/pages/home_local.dart';
+
 import 'package:myapp/services/storage.dart';
 
 class WritingApp extends StatelessWidget {
   final int writingIndex;
-  final String username;
-  const WritingApp(
-      {super.key, required this.writingIndex, required this.username});
+  const WritingApp({super.key, required this.writingIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,6 @@ class WritingApp extends StatelessWidget {
         ),
         body: WritingPage(
           writingIndex: writingIndex,
-          username: username,
         ),
       ),
     );
@@ -33,9 +31,7 @@ class WritingApp extends StatelessWidget {
 
 class WritingPage extends StatefulWidget {
   final int writingIndex;
-  final String username;
-  const WritingPage(
-      {super.key, required this.writingIndex, required this.username});
+  const WritingPage({super.key, required this.writingIndex});
 
   @override
   WritingPageState createState() => WritingPageState();
@@ -61,9 +57,8 @@ class WritingPageState extends State<WritingPage> {
   }
 
   void loadWriting() async {
-    writingText = await storage.loadArray("writingText_${widget.username}");
-    writingHeaders =
-        await storage.loadArray("writingHeader_${widget.username}");
+    writingText = await storage.loadArray("writingText_local");
+    writingHeaders = await storage.loadArray("writingHeader_local");
     if (widget.writingIndex < writingHeaders.length) {
       titleController.text = writingHeaders[widget.writingIndex];
       textController.text = writingText[widget.writingIndex];
@@ -75,8 +70,8 @@ class WritingPageState extends State<WritingPage> {
       writingHeaders[widget.writingIndex] = titleController.text;
       writingText[widget.writingIndex] = textController.text;
     });
-    await storage.saveArray("writingHeader_${widget.username}", writingHeaders);
-    await storage.saveArray("writingText_${widget.username}", writingText);
+    await storage.saveArray("writingHeader_local", writingHeaders);
+    await storage.saveArray("writingText_local", writingText);
   }
 
   @override
@@ -106,8 +101,7 @@ class WritingPageState extends State<WritingPage> {
                         Navigator.pop(context);
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>
-                                HomeApp(username: widget.username),
+                            builder: (context) => HomeAppLocal(),
                           ),
                         );
                       },
@@ -120,8 +114,7 @@ class WritingPageState extends State<WritingPage> {
                         Navigator.pop(context);
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>
-                                HomeApp(username: widget.username),
+                            builder: (context) => HomeAppLocal(),
                           ),
                         );
                       },
@@ -140,10 +133,8 @@ class WritingPageState extends State<WritingPage> {
                 writingHeaders[widget.writingIndex] = titleController.text;
                 writingText[widget.writingIndex] = textController.text;
               });
-              await storage.saveArray(
-                  "writingHeader_${widget.username}", writingHeaders);
-              await storage.saveArray(
-                  "writingText_${widget.username}", writingText);
+              await storage.saveArray("writingHeader_local", writingHeaders);
+              await storage.saveArray("writingText_local", writingText);
             },
           ),
         ],

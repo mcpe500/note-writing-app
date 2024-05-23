@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/pages/login.dart';
-import 'package:myapp/pages/writing.dart';
+import 'package:myapp/pages/writing_local.dart';
 import 'package:myapp/services/index.dart';
 import 'package:myapp/services/storage.dart';
 
-class HomeApp extends StatelessWidget {
-  final String username;
-
-  const HomeApp({super.key, required this.username});
+class HomeAppLocal extends StatelessWidget {
+  const HomeAppLocal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,7 @@ class HomeApp extends StatelessWidget {
                 ),
               ],
             ),
-            child: HomePage(username: username),
+            child: const HomePage(),
           ),
         ),
       ),
@@ -36,9 +34,7 @@ class HomeApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  final String username;
-
-  const HomePage({super.key, required this.username});
+  const HomePage({super.key});
 
   @override
   HomePageState createState() => HomePageState();
@@ -59,8 +55,7 @@ class HomePageState extends State<HomePage> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (context) => WritingApp(
-                        writingIndex: index, username: widget.username)),
+                    builder: (context) => WritingApp(writingIndex: index)),
               );
             },
             child: Card(
@@ -78,8 +73,7 @@ class HomePageState extends State<HomePage> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                  builder: (context) => WritingApp(
-                      writingIndex: index, username: widget.username)),
+                  builder: (context) => WritingApp(writingIndex: index)),
             );
           },
           child: Card(
@@ -100,7 +94,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return FutureBuilder<List<String>>(
       future: StorageService.getInstance()
-          .then((s) => s.loadArray("writingHeader_${widget.username}")),
+          .then((s) => s.loadArray("writingHeader_local")),
       builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
@@ -116,7 +110,8 @@ class HomePageState extends State<HomePage> {
                   Row(children: [
                     Container(
                         alignment: Alignment.centerLeft,
-                        child: Text("Welcome, ${widget.username}")),
+                        child:
+                            const Text("Welcome to the Center for Writing!")),
                     const Spacer(),
                     Container(
                       alignment: Alignment.centerRight,
@@ -178,13 +173,11 @@ class HomePageState extends State<HomePage> {
                       StorageService storage =
                           await StorageService.getInstance();
 
-                      await storage.saveArray(
-                          "writingHeader_${widget.username}", array);
-                      List<String> writingText = await storage
-                          .loadArray("writingText_${widget.username}");
+                      await storage.saveArray("writingHeader_local", array);
+                      List<String> writingText =
+                          await storage.loadArray("writingText_local");
                       writingText.add('New Item Text');
-                      await storage.saveArray(
-                          "writingText_${widget.username}", writingText);
+                      await storage.saveArray("writingText_local", writingText);
                       setState(() {});
                     },
                     child: const Text('Add New Item'),
