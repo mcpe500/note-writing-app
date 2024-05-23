@@ -1,0 +1,3 @@
+[submodule "backend-note-writing-app"]
+	path = backend-note-writing-app
+	url = https://github.com/dukefirehawk/boilerplates.git
