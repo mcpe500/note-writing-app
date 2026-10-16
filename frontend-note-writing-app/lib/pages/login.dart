@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/pages/home.dart';
-import 'package:myapp/utils/storage.dart';
+import 'package:myapp/pages/home_local.dart';
+import 'package:myapp/services/storage.dart';
 
 class LoginApp extends StatelessWidget {
   const LoginApp({super.key});
@@ -42,8 +43,20 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  late StorageService storage;
+
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    initStorage();
+  }
+
+  void initStorage() async {
+    storage = await StorageService.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +98,9 @@ class LoginPageState extends State<LoginPage> {
             child: const Text('Login'),
             onPressed: () async {
               List<String> accountsUsername =
-                  await loadArray('accountsUsername');
+                  await storage.loadArray('accountsUsername');
               List<String> accountsPassword =
-                  await loadArray('accountsPassword');
+                  await storage.loadArray('accountsPassword');
               if (accountsUsername.contains(usernameController.text)) {
                 int index = accountsUsername.indexOf(usernameController.text);
                 if (passwordController.text == accountsPassword[index]) {
@@ -101,8 +114,8 @@ class LoginPageState extends State<LoginPage> {
               } else {
                 accountsUsername.add(usernameController.text);
                 accountsPassword.add(passwordController.text);
-                await saveArray("accountsUsername", accountsUsername);
-                await saveArray("accountsPassword", accountsPassword);
+                await storage.saveArray("accountsUsername", accountsUsername);
+                await storage.saveArray("accountsPassword", accountsPassword);
 
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
@@ -110,6 +123,19 @@ class LoginPageState extends State<LoginPage> {
               }
             },
           ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.grey[800],
+              minimumSize: const Size(double.infinity, 50),
+            ),
+            child: const Text('Local Save'),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => HomeAppLocal()));
+            },
+          )
         ],
       ),
     );

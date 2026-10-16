@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/pages/login.dart';
 import 'package:myapp/pages/writing.dart';
-import 'package:myapp/utils/storage.dart';
+import 'package:myapp/services/index.dart';
+import 'package:myapp/services/storage.dart';
 
 class HomeApp extends StatelessWidget {
   final String username;
@@ -98,7 +99,8 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<String>>(
-      future: loadArray("writingHeader_${widget.username}"),
+      future: StorageService.getInstance()
+          .then((s) => s.loadArray("writingHeader_${widget.username}")),
       builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
@@ -173,12 +175,15 @@ class HomePageState extends State<HomePage> {
                     ),
                     onPressed: () async {
                       array.add('New Item');
-                      await saveArray(
+                      StorageService storage =
+                          await StorageService.getInstance();
+
+                      await storage.saveArray(
                           "writingHeader_${widget.username}", array);
-                      List<String> writingText =
-                          await loadArray("writingText_${widget.username}");
+                      List<String> writingText = await storage
+                          .loadArray("writingText_${widget.username}");
                       writingText.add('New Item Text');
-                      await saveArray(
+                      await storage.saveArray(
                           "writingText_${widget.username}", writingText);
                       setState(() {});
                     },

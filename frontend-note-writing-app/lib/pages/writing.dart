@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/pages/home.dart';
-import 'package:myapp/utils/storage.dart';
+import 'package:myapp/services/storage.dart';
 
 class WritingApp extends StatelessWidget {
   final int writingIndex;
@@ -42,6 +42,8 @@ class WritingPage extends StatefulWidget {
 }
 
 class WritingPageState extends State<WritingPage> {
+  late StorageService storage;
+
   final TextEditingController titleController = TextEditingController();
   final TextEditingController textController = TextEditingController();
   List<String> writingHeaders = [];
@@ -50,12 +52,18 @@ class WritingPageState extends State<WritingPage> {
   @override
   void initState() {
     super.initState();
+    initStorage();
     loadWriting();
   }
 
+  void initStorage() async {
+    storage = await StorageService.getInstance();
+  }
+
   void loadWriting() async {
-    writingText = await loadArray("writingText_${widget.username}");
-    writingHeaders = await loadArray("writingHeader_${widget.username}");
+    writingText = await storage.loadArray("writingText_${widget.username}");
+    writingHeaders =
+        await storage.loadArray("writingHeader_${widget.username}");
     if (widget.writingIndex < writingHeaders.length) {
       titleController.text = writingHeaders[widget.writingIndex];
       textController.text = writingText[widget.writingIndex];
@@ -67,8 +75,8 @@ class WritingPageState extends State<WritingPage> {
       writingHeaders[widget.writingIndex] = titleController.text;
       writingText[widget.writingIndex] = textController.text;
     });
-    await saveArray("writingHeader_${widget.username}", writingHeaders);
-    await saveArray("writingText_${widget.username}", writingText);
+    await storage.saveArray("writingHeader_${widget.username}", writingHeaders);
+    await storage.saveArray("writingText_${widget.username}", writingText);
   }
 
   @override
@@ -132,9 +140,10 @@ class WritingPageState extends State<WritingPage> {
                 writingHeaders[widget.writingIndex] = titleController.text;
                 writingText[widget.writingIndex] = textController.text;
               });
-              await saveArray(
+              await storage.saveArray(
                   "writingHeader_${widget.username}", writingHeaders);
-              await saveArray("writingText_${widget.username}", writingText);
+              await storage.saveArray(
+                  "writingText_${widget.username}", writingText);
             },
           ),
         ],

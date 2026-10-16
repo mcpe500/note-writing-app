@@ -15,7 +15,9 @@ void main() async {
       ..level = Level.ALL
       ..onRecord.listen(prettyLog);
     var app = Angel(logger: logger, reflector: MirrorsReflector());
+    
     await app.configure(configureServer);
+
     return app;
   }, [
     Directory('config'),
